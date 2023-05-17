@@ -1,0 +1,81 @@
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+ </head>
+ <body class='bgi'>
+  <form action="list">
+  <div th:insert="top"></div>
+  <div class='container'>
+  <div class='card'>
+  <!--<div class='card-header' th:if="${!blist.empty}">
+   <table style='width:90%;'>
+    <tr>
+     <td style='width:25%'>
+     	<label style='font-size:2vw' th:text="${pn+' of '+tp}"></label>
+     </td>
+     <td style='width:50%'>
+        <a th:if="${pn>5}" class='an' th:href='@{list(pn=${pn-1})}'>Prev</a>
+     	<a th:if="${tp<=5}" th:class='${pn==c?"anc":"an"}' th:href='@{list(pn=${c})}' th:each="c:${#numbers.sequence(1,tp,1)}" th:text="${c}"></a>
+     	<a th:if="${tp>5 and pn<=5}" th:class='${pn==c?"anc":"an"}' th:href='@{list(pn=${c})}' th:each="c:${#numbers.sequence(1,5,1)}" th:text="${c}"></a>
+     	<a th:if="${tp>5 and pn>5}" th:class='${pn==c?"anc":"an"}' th:href='@{list(pn=${c})}' th:each="c:${#numbers.sequence(1,4,1)}" th:text="${c}"></a>
+     	<label th:if="${tp>5 and pn>5}" style='margin-left:1vw;font-size:2.5vw'>. . .</label>
+     	<a th:if="${tp>5 and pn>5}" th:class='anc' th:href='@{list(pn=${pn})}' th:text="${pn}"></a>
+     	<a th:if="${tp>5}" class='an' th:href='@{list(pn=${pn+1})}'>Next</a>
+     </td>
+     <td style='width:25%' align="right">
+        <input type="hidden" id="tp" th:value="${tp}">
+        <input type='number' id="pn" name="pn" style='width:8vw' placeholder='Type page no' required>
+        <button onclick="return checkNo()">Go</button>
+     </td>
+    </tr>
+   </table>
+  </div>-->
+  <h1><centre><u>Book List</u></centre></h1>
+  <div class='card-body'>
+  <div th:if="${blist.empty}" class='scrollit'>
+   <label class='lah' style='color:red'>No book is added yet</label>
+  </div>
+  <div th:if="${!blist.empty}" class='scrollit'>  
+  <table class='table'>
+   <thead>
+    <tr>
+     <th class='tdr'>BId</th>
+     <th class='tdr'>Title</th>
+     <th class='tdr'>Author</th>
+     <th class='tdr'>CId</th>
+     <th class='tdr'>PId</th>
+     <th class='tdr'>Copies</th>
+     <th class='tdr'>Price</th>
+     <th class='tdr'>Stock</th>
+     <th class='tdr' style='color:magenta'>Action</th>
+    </tr>
+   </thead>
+   <tbody>
+    <tr th:each="book:${blist}">
+     <td class='tdr' th:text="${book.bookid}"></td>
+     <td class='tdr' th:text="${book.title}"></td>
+     <td class='tdr' th:text="${book.author}"></td>
+     <td class='tdr' th:text="${book.catid}"></td>
+     <td class='tdr' th:text="${book.pubid}"></td>
+     <td class='tdr' th:text="${book.copies}"></td>
+     <td class='tdr' th:text="${'&#8377'+book.price}"></td>
+     <td class='tdr' th:if="${book.copies>0}" style='color:green'>In Stock</td>
+     <td class='tdr' th:if="${book.copies==0}" style='color:red'>Out of Stock</td>
+     <td class='tdr'>
+      <a th:href="@{edit(bid=${book.bookid})}">Edit |</a>
+      <a th:href="@{remove(bid=${book.bookid})}" onclick='return confirm("Are you sure to remove?")'>Remove</a> 
+     </td>
+    </tr>
+   </tbody>
+  </table>
+  </div>
+  </div>
+  </div>
+   <div class='dvv'>
+     <a class='btl' href='add'>Add new book</a>
+     <a class='btl' href='../../home' style='background-color:orange'>Back</a>
+  </div>
+  </div>
+  </form>
+ </body>
+ </html>
